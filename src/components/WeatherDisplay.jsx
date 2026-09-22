@@ -1,7 +1,12 @@
 import getWeatherDescription from '../utils/weatherConditions';
 
 function WeatherDisplay({ weather, location }) {
-    const weatherDescription = getWeatherDescription(weather.weather_code);
+    const currentWeather = weather.current;
+    const dailyWeather = weather.daily;
+
+    const weatherDescription = getWeatherDescription(
+        currentWeather.weather_code
+    );
 
     return (
         <>
@@ -12,20 +17,40 @@ function WeatherDisplay({ weather, location }) {
             </p>
 
             <p>
-                Temperature: {weather.temperature_2m}°C
+                Temperature: {currentWeather.temperature_2m}°C
             </p>
 
             <p>
-                Feels like: {weather.apparent_temperature}°C
+                Feels like: {currentWeather.apparent_temperature}°C
             </p>
 
             <p>
-                Humidity: {weather.relative_humidity_2m}%
+                Humidity: {currentWeather.relative_humidity_2m}%
             </p>
 
             <p>
-                Wind: {weather.wind_speed_10m} km/h
+                Wind: {currentWeather.wind_speed_10m} km/h
             </p>
+
+            <h3>7-Day Forecast</h3>
+
+            {dailyWeather.time.slice(0, 7).map((date, index) => (
+                <div key={date}>
+                    <h4>{date}</h4>
+
+                    <p>
+                        {getWeatherDescription(dailyWeather.weather_code[index])}
+                    </p>
+
+                    <p>
+                        High: {dailyWeather.temperature_2m_max[index]}°C
+                    </p>
+
+                    <p>
+                        Low: {dailyWeather.temperature_2m_min[index]}°C
+                    </p>
+                </div>
+            ))}
         </>
     );
 }
