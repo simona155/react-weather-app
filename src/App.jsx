@@ -7,20 +7,38 @@ function App() {
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSearch = async () => {
+    if (!city.trim()) {
+      setError('Please enter a city.');
+      return;
+    }
+
+    setError('');
     setLoading(true);
 
-    const cityData = await getCoordinates(city);
-    setLocation(cityData);
+    try {
+      const cityData = await getCoordinates(city);
 
-    const weatherData = await getWeather(
-      cityData.latitude,
-      cityData.longitude
-    );
+      if (!cityData) {
+        setError('City not found.');
+        return;
+      }
 
-    setWeather(weatherData);
-    setLoading(false);
+      setLocation(cityData);
+
+      const weatherData = await getWeather(
+        cityData.latitude,
+        cityData.longitude
+      );
+
+      setWeather(weatherData);
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,6 +52,8 @@ function App() {
       <button onClick={handleSearch}>
         Search
       </button>
+
+      {error && <p>{error}</p>}
 
       {loading && <p>Loading...</p>}
 
