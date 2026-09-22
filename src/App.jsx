@@ -6,8 +6,11 @@ function App() {
   const [city, setCity] = useState('');
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
+    setLoading(true);
+
     const cityData = await getCoordinates(city);
     setLocation(cityData);
 
@@ -17,6 +20,7 @@ function App() {
     );
 
     setWeather(weatherData);
+    setLoading(false);
   };
 
   return (
@@ -31,7 +35,9 @@ function App() {
         Search
       </button>
 
-      {weather && (
+      {loading && <p>Loading...</p>}
+
+      {weather && !loading && (
         <WeatherDisplay
           weather={weather}
           location={location}
