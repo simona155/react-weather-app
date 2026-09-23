@@ -10,7 +10,7 @@ function WeatherDisplay({ weather, location }) {
 
     return (
         <>
-            <h2>{location.name}</h2>
+            <h2 className="weather-location">{location.name}</h2>
 
             <p>
                 {weatherDescription}
