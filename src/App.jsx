@@ -47,8 +47,9 @@ function App() {
   };
 
   const searchBox = (
-    <div className="search-box">
+    <div className="search-box d-flex w-100">
       <input
+        className="form-control"
         type="text"
         value={city}
         onChange={(event) => setCity(event.target.value)}
@@ -60,18 +61,24 @@ function App() {
         placeholder="Search for a city..."
       />
 
-      <button onClick={handleSearch}>
+      <button
+        className="btn btn-primary"
+        onClick={handleSearch}
+      >
         Search
       </button>
     </div>
   );
 
   return (
-    <div className={`weather-app ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-      <aside className="sidebar">
+    <div
+      className={`weather-app ${darkMode ? 'dark-mode' : 'light-mode'
+        }`}
+    >
+      <aside className="sidebar d-flex flex-column justify-content-between p-4 rounded-4 shadow">
         <div>
-          <div className="brand">
-            <div className="brand-icon">
+          <div className="brand d-flex align-items-center gap-3 mb-5 px-2">
+            <div className="brand-icon d-flex align-items-center justify-content-center rounded-3">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -93,8 +100,8 @@ function App() {
             <span>Weather</span>
           </div>
 
-          <nav className="sidebar-nav">
-            <button className="sidebar-link active">
+          <nav className="sidebar-nav d-flex flex-column gap-2">
+            <button className="sidebar-link active d-flex align-items-center gap-3 w-100">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -108,7 +115,7 @@ function App() {
               <span>Weather</span>
             </button>
 
-            <button className="sidebar-link">
+            <button className="sidebar-link d-flex align-items-center gap-3 w-100">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -125,7 +132,7 @@ function App() {
         </div>
 
         <button
-          className="mode-button"
+          className="mode-button d-flex align-items-center gap-3 w-100"
           onClick={() => setDarkMode(!darkMode)}
         >
           {darkMode ? (
@@ -192,12 +199,6 @@ function App() {
             location={location}
             searchBox={searchBox}
           />
-        )}
-
-        {!weather && !loading && error && (
-          <div className="error-message empty-error">
-            {error}
-          </div>
         )}
       </main>
     </div>

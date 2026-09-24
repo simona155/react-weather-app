@@ -30,35 +30,35 @@ function WeatherDisplay({ weather, location, searchBox }) {
         <div className="container-fluid px-0">
             <div className="row g-4 align-items-stretch">
                 <div className="col-12 col-xl-8 d-flex flex-column gap-4">
-                    <div className="dashboard-search d-flex justify-content-center">
+                    <div className="d-flex justify-content-center">
                         {searchBox}
                     </div>
 
-                    <div className="current-weather-card">
+                    <div className="current-weather-card d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 p-4 p-lg-5">
                         <div className="current-weather-info">
-                            <h2 className="weather-location">
+                            <h2 className="weather-location mb-1">
                                 {location.name}
                             </h2>
 
-                            <p className="weather-description">
+                            <p className="weather-description mb-0">
                                 {weatherDescription}
                             </p>
 
-                            <p className="current-temperature">
+                            <p className="current-temperature mt-3 mb-0">
                                 {Math.round(currentWeather.temperature_2m)}°C
                             </p>
 
-                            <p className="feels-like">
+                            <p className="feels-like mt-2 mb-0">
                                 Feels like {Math.round(
                                     currentWeather.apparent_temperature
                                 )}°C
                             </p>
                         </div>
 
-                        <div className="weather-details">
-                            <div className="weather-detail">
+                        <div className="weather-details d-flex gap-4 gap-lg-5">
+                            <div className="weather-detail d-flex flex-column align-items-center">
                                 <svg
-                                    className="detail-icon"
+                                    className="detail-icon mb-2"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -71,13 +71,14 @@ function WeatherDisplay({ weather, location, searchBox }) {
                                     {currentWeather.relative_humidity_2m}%
                                 </span>
 
-                                <span className="detail-label">
+                                <span className="detail-label mt-1">
                                     Humidity
                                 </span>
                             </div>
 
-                            <div className="weather-detail">
+                            <div className="weather-detail d-flex flex-column align-items-center">
                                 <svg
+                                    className="detail-icon mb-2"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -92,7 +93,7 @@ function WeatherDisplay({ weather, location, searchBox }) {
                                     {Math.round(currentWeather.wind_speed_10m)} km/h
                                 </span>
 
-                                <span className="detail-label">
+                                <span className="detail-label mt-1">
                                     Wind
                                 </span>
                             </div>
@@ -108,10 +109,12 @@ function WeatherDisplay({ weather, location, searchBox }) {
                 </div>
 
                 <div className="col-12 col-xl-4 d-flex">
-                    <div className="forecast-card w-100">
-                        <h3 className="forecast-title">7-Day Forecast</h3>
+                    <div className="forecast-card w-100 p-4">
+                        <h3 className="forecast-title mb-4">
+                            7-Day Forecast
+                        </h3>
 
-                        <div className="forecast-list">
+                        <div className="forecast-list d-flex flex-column">
                             {dailyWeather.time.map((date, index) => {
                                 const minTemperature =
                                     dailyWeather.temperature_2m_min[index];
@@ -131,7 +134,7 @@ function WeatherDisplay({ weather, location, searchBox }) {
 
                                 return (
                                     <div
-                                        className="forecast-day"
+                                        className="forecast-day d-grid align-items-center"
                                         key={date}
                                     >
                                         <span className="forecast-day-name">
@@ -146,7 +149,7 @@ function WeatherDisplay({ weather, location, searchBox }) {
                                             )}
                                         </span>
 
-                                        <span className="forecast-temperature">
+                                        <span className="forecast-temperature text-center">
                                             {Math.round(minTemperature)}°
                                         </span>
 
@@ -160,7 +163,7 @@ function WeatherDisplay({ weather, location, searchBox }) {
                                             />
                                         </div>
 
-                                        <span className="forecast-temperature">
+                                        <span className="forecast-temperature text-center">
                                             {Math.round(maxTemperature)}°
                                         </span>
                                     </div>
