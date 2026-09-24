@@ -285,8 +285,14 @@ body {
 }
 
 @media (max-width: 1199px) {
+  .sidebar {
+    width: 190px;
+  }
+
   .main-content {
-    padding: 0.5rem 1rem;
+    width: calc(100% - 190px);
+    margin-left: 190px;
+    padding: 0.5rem 1rem 0.5rem 2rem;
   }
 
   .forecast-card {
@@ -294,28 +300,85 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .weather-app {
     display: block;
     padding: 1rem;
   }
 
   .sidebar {
-    position: static;
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
     width: 100%;
     min-height: auto;
+    padding: 1rem !important;
+  }
+
+  .sidebar>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .brand {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0;
+  }
+
+  .brand-icon {
+    width: 30px;
+    height: 30px;
   }
 
   .sidebar-nav {
     flex-direction: row !important;
+    gap: 0.5rem !important;
+    width: auto;
+    margin-left: auto;
+    margin-right: 3rem;
+  }
+
+  .sidebar-link {
+    width: auto !important;
+    padding: 0.65rem;
+  }
+
+  .sidebar-link span {
+    display: none;
+  }
+
+  .sidebar-link svg {
+    width: 20px;
+    height: 20px;
   }
 
   .mode-button {
-    margin-top: 1rem;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: auto !important;
+    margin: 0;
+    padding: 0.65rem;
+    transform: translateY(-50%);
+  }
+
+  .mode-button span {
+    display: none;
+  }
+
+  .mode-button svg {
+    width: 20px;
+    height: 20px;
   }
 
   .main-content {
     width: auto;
+    min-height: calc(100vh - 100px);
     margin-left: 0;
     padding: 1.5rem 0 0;
   }
@@ -336,6 +399,33 @@ body {
 @media (max-width: 576px) {
   .weather-app {
     padding: 0.75rem;
+  }
+
+  .sidebar {
+    padding: 0.75rem !important;
+  }
+
+  .sidebar>div {
+    gap: 0.5rem;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .brand-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sidebar-nav {
+    gap: 0.25rem !important;
+    margin-right: 2.5rem;
+  }
+
+  .sidebar-link,
+  .mode-button {
+    padding: 0.55rem;
   }
 
   .main-content {

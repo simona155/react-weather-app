@@ -181,36 +181,47 @@ function App() {
         <button
           className="mode-button d-flex align-items-center gap-3 w-100"
           onClick={() => setDarkMode(!darkMode)}
+          aria-label={
+            darkMode
+              ? 'Switch to light mode'
+              : 'Switch to dark mode'
+          }
         >
           {darkMode ? (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-            >
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2" />
-              <path d="M12 20v2" />
-              <path d="M4.93 4.93l1.42 1.42" />
-              <path d="M17.65 17.65l1.42 1.42" />
-              <path d="M2 12h2" />
-              <path d="M20 12h2" />
-              <path d="M4.93 19.07l1.42-1.42" />
-              <path d="M17.65 6.35l1.42-1.42" />
-            </svg>
-          ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-            >
-              <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z" />
-            </svg>
-          )}
+            <>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z" />
+              </svg>
 
-          <span>{darkMode ? 'Light mode' : 'Dark mode'}</span>
+              <span>Light mode</span>
+            </>
+          ) : (
+            <>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="M4.93 4.93l1.42 1.42" />
+                <path d="M17.65 17.65l1.42 1.42" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="M4.93 19.07l1.42-1.42" />
+                <path d="M17.65 6.35l1.42-1.42" />
+              </svg>
+
+              <span>Dark mode</span>
+            </>
+          )}
         </button>
       </aside>
 
