@@ -1,4 +1,5 @@
 import getWeatherDescription from '../utils/weatherConditions';
+import WeatherMap from './WeatherMap';
 
 function WeatherDisplay({ weather, location, searchBox }) {
     const currentWeather = weather.current;
@@ -77,7 +78,6 @@ function WeatherDisplay({ weather, location, searchBox }) {
 
                             <div className="weather-detail">
                                 <svg
-                                    className="detail-icon"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -100,7 +100,10 @@ function WeatherDisplay({ weather, location, searchBox }) {
                     </div>
 
                     <div className="map-placeholder flex-grow-1">
-                        <span>Map</span>
+                        <WeatherMap
+                            latitude={location.latitude}
+                            longitude={location.longitude}
+                        />
                     </div>
                 </div>
 
