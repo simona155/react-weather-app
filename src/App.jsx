@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
 import { getCoordinates, getWeather } from './services/weatherApi';
 import WeatherDisplay from './components/WeatherDisplay';
+import Cities from './components/Cities';
 import './App.css';
 
 function App() {
@@ -11,12 +13,14 @@ function App() {
   const [error, setError] = useState('');
   const [darkMode, setDarkMode] = useState(true);
 
-  const handleSearch = async () => {
+  const navigate = useNavigate();
+
+  const handleSearch = async (searchCity = city) => {
     setWeather(null);
     setLocation(null);
     setError('');
 
-    if (!city.trim()) {
+    if (!searchCity.trim()) {
       setError('Please enter a city.');
       return;
     }
@@ -24,13 +28,14 @@ function App() {
     setLoading(true);
 
     try {
-      const cityData = await getCoordinates(city);
+      const cityData = await getCoordinates(searchCity);
 
       if (!cityData) {
         setError('City not found.');
         return;
       }
 
+      setCity(cityData.name);
       setLocation(cityData);
 
       const weatherData = await getWeather(
@@ -39,6 +44,36 @@ function App() {
       );
 
       setWeather(weatherData);
+      navigate('/');
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCitySelect = async (cityName) => {
+    setLoading(true);
+    setError('');
+
+    try {
+      const cityData = await getCoordinates(cityName);
+
+      if (!cityData) {
+        setError('City not found.');
+        return;
+      }
+
+      const weatherData = await getWeather(
+        cityData.latitude,
+        cityData.longitude
+      );
+
+      setCity(cityData.name);
+      setLocation(cityData);
+      setWeather(weatherData);
+
+      navigate('/');
     } catch {
       setError('Something went wrong. Please try again.');
     } finally {
@@ -63,7 +98,7 @@ function App() {
 
       <button
         className="btn btn-primary"
-        onClick={handleSearch}
+        onClick={() => handleSearch()}
       >
         Search
       </button>
@@ -101,7 +136,13 @@ function App() {
           </div>
 
           <nav className="sidebar-nav d-flex flex-column gap-2">
-            <button className="sidebar-link active d-flex align-items-center gap-3 w-100">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `sidebar-link d-flex align-items-center gap-3 w-100 ${isActive ? 'active' : ''
+                }`
+              }
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -113,9 +154,15 @@ function App() {
               </svg>
 
               <span>Weather</span>
-            </button>
+            </NavLink>
 
-            <button className="sidebar-link d-flex align-items-center gap-3 w-100">
+            <NavLink
+              to="/cities"
+              className={({ isActive }) =>
+                `sidebar-link d-flex align-items-center gap-3 w-100 ${isActive ? 'active' : ''
+                }`
+              }
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -127,7 +174,7 @@ function App() {
               </svg>
 
               <span>Cities</span>
-            </button>
+            </NavLink>
           </nav>
         </div>
 
@@ -171,35 +218,53 @@ function App() {
         className={`main-content ${weather ? 'has-weather' : 'empty-state'
           }`}
       >
-        {!weather && !loading && (
-          <div className="search-start">
-            {searchBox}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                {!weather && !loading && (
+                  <div className="search-start">
+                    {searchBox}
 
-            {error && (
-              <div className="error-message">
-                {error}
-              </div>
-            )}
-          </div>
-        )}
+                    {error && (
+                      <div className="error-message">
+                        {error}
+                      </div>
+                    )}
+                  </div>
+                )}
 
-        {loading && (
-          <div className="search-start loading-state">
-            {searchBox}
+                {loading && (
+                  <div className="search-start loading-state">
+                    {searchBox}
 
-            <p className="loading-text">
-              Loading...
-            </p>
-          </div>
-        )}
+                    <p className="loading-text">
+                      Loading...
+                    </p>
+                  </div>
+                )}
 
-        {weather && !loading && (
-          <WeatherDisplay
-            weather={weather}
-            location={location}
-            searchBox={searchBox}
+                {weather && !loading && (
+                  <WeatherDisplay
+                    weather={weather}
+                    location={location}
+                    searchBox={searchBox}
+                  />
+                )}
+              </>
+            }
           />
-        )}
+
+          <Route
+            path="/cities"
+            element={
+              <Cities
+                onCitySelect={handleCitySelect}
+              />
+            }
+          />
+        </Routes>
       </main>
     </div>
   );
