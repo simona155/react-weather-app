@@ -245,7 +245,7 @@ body {
 }
 
 .forecast-day {
-  min-height: 62px;
+  min-height: 80px;
   grid-template-columns: 55px 1fr 35px 8px 35px;
   gap: 0.75rem;
   border-bottom: 1px solid var(--border);
@@ -484,4 +484,22 @@ body {
 .city-temperature {
   font-size: 1.4rem;
   font-weight: 600;
+}
+
+.night-weather-card {
+  background-image:
+    linear-gradient(rgba(7, 15, 32, 0.55),
+      rgba(7, 15, 32, 0.55)),
+    url('/images/starry_sky.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.day-weather-card {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0.35)),
+    url('/images/day_time.jpg');
+  background-size: cover;
+  background-position: center;
 }

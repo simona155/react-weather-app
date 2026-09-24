@@ -1,7 +1,7 @@
 import getWeatherDescription from '../utils/weatherConditions';
 import WeatherMap from './WeatherMap';
 
-function WeatherDisplay({ weather, location, searchBox }) {
+function WeatherDisplay({ weather, location, searchBox, darkMode }) {
     const currentWeather = weather.current;
     const dailyWeather = weather.daily;
 
@@ -34,7 +34,12 @@ function WeatherDisplay({ weather, location, searchBox }) {
                         {searchBox}
                     </div>
 
-                    <div className="current-weather-card d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 p-4 p-lg-5">
+                    <div
+                        className={`current-weather-card d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 p-4 p-lg-5 ${darkMode
+                                ? 'night-weather-card'
+                                : 'day-weather-card'
+                            }`}
+                    >
                         <div className="current-weather-info">
                             <h2 className="weather-location mb-1">
                                 {location.name}

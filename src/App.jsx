@@ -261,6 +261,7 @@ function App() {
                     weather={weather}
                     location={location}
                     searchBox={searchBox}
+                    darkMode={darkMode}
                   />
                 )}
               </>
