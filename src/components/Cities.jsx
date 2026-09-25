@@ -40,21 +40,24 @@ function Cities({ onCitySelect }) {
         };
     };
 
+    const loadDefaultCities = async () => {
+        setLoading(true);
+        setError('');
+
+        try {
+            const results = await Promise.all(
+                defaultCities.map((city) => loadCity(city))
+            );
+
+            setCities(results.filter(Boolean));
+        } catch {
+            setError('Could not load cities.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const loadDefaultCities = async () => {
-            try {
-                const results = await Promise.all(
-                    defaultCities.map((city) => loadCity(city))
-                );
-
-                setCities(results.filter(Boolean));
-            } catch {
-                setError('Could not load cities.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
         loadDefaultCities();
     }, []);
 
@@ -89,23 +92,6 @@ function Cities({ onCitySelect }) {
         setSearch(value);
 
         if (!value.trim()) {
-            const loadDefaultCities = async () => {
-                setLoading(true);
-                setError('');
-
-                try {
-                    const results = await Promise.all(
-                        defaultCities.map((city) => loadCity(city))
-                    );
-
-                    setCities(results.filter(Boolean));
-                } catch {
-                    setError('Could not load cities.');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
             loadDefaultCities();
         }
     };
