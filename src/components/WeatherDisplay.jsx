@@ -25,6 +25,7 @@ function WeatherDisplay({ weather, location, searchBox, darkMode }) {
     const lowestTemperature = Math.min(...temperatures);
     const highestTemperature = Math.max(...temperatures);
     const temperatureRange = highestTemperature - lowestTemperature;
+    const safeTemperatureRange = temperatureRange || 1;
 
     return (
         <div className="container-fluid px-0">
@@ -129,12 +130,12 @@ function WeatherDisplay({ weather, location, searchBox, darkMode }) {
 
                                 const topPosition =
                                     ((highestTemperature - maxTemperature) /
-                                        temperatureRange) *
+                                        safeTemperatureRange) *
                                     100;
 
                                 const bottomPosition =
                                     ((highestTemperature - minTemperature) /
-                                        temperatureRange) *
+                                        safeTemperatureRange) *
                                     100;
 
                                 return (
