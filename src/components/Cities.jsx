@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getCoordinates, getWeather } from '../services/weatherApi';
 import getWeatherDescription from '../utils/weatherConditions';
+import SearchBar from './SearchBar';
 
 function Cities({ onCitySelect }) {
     const [search, setSearch] = useState('');
@@ -99,27 +100,11 @@ function Cities({ onCitySelect }) {
     return (
         <div className="cities-page container-fluid px-0">
             <div className="mb-4">
-                <div className="search-box d-flex w-100">
-                    <input
-                        className="form-control"
-                        type="text"
-                        value={search}
-                        onChange={handleSearchChange}
-                        onKeyDown={(event) => {
-                            if (event.key === 'Enter') {
-                                handleSearch();
-                            }
-                        }}
-                        placeholder="Search for a city..."
-                    />
-
-                    <button
-                        className="btn btn-primary"
-                        onClick={handleSearch}
-                    >
-                        Search
-                    </button>
-                </div>
+                <SearchBar
+                    value={search}
+                    onChange={handleSearchChange}
+                    onSearch={handleSearch}
+                />
 
                 {error && (
                     <div className="error-message">

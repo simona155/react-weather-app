@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
 import { getCoordinates, getWeather } from './services/weatherApi';
 import WeatherDisplay from './components/WeatherDisplay';
+import SearchBar from './components/SearchBar';
 import Cities from './components/Cities';
 import './App.css';
 
@@ -82,27 +83,11 @@ function App() {
   };
 
   const searchBox = (
-    <div className="search-box d-flex w-100">
-      <input
-        className="form-control"
-        type="text"
-        value={city}
-        onChange={(event) => setCity(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            handleSearch();
-          }
-        }}
-        placeholder="Search for a city..."
-      />
-
-      <button
-        className="btn btn-primary"
-        onClick={() => handleSearch()}
-      >
-        Search
-      </button>
-    </div>
+    <SearchBar
+      value={city}
+      onChange={(event) => setCity(event.target.value)}
+      onSearch={() => handleSearch()}
+    />
   );
 
   return (
