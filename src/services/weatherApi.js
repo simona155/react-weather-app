@@ -1,7 +1,11 @@
 const getCoordinates = async (city) => {
     const response = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`
     );
+
+    if (!response.ok) {
+        throw new Error('Could not fetch city coordinates.');
+    }
 
     const data = await response.json();
 
@@ -16,6 +20,10 @@ const getWeather = async (latitude, longitude) => {
     const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
     );
+
+    if (!response.ok) {
+        throw new Error('Could not fetch weather data.');
+    }
 
     const data = await response.json();
 
