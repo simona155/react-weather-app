@@ -16,6 +16,25 @@ function App() {
 
   const navigate = useNavigate();
 
+  const loadWeather = async (cityName) => {
+    const cityData = await getCoordinates(cityName);
+
+    if (!cityData) {
+      throw new Error('City not found.');
+    }
+
+    const weatherData = await getWeather(
+      cityData.latitude,
+      cityData.longitude
+    );
+
+    setCity(cityData.name);
+    setLocation(cityData);
+    setWeather(weatherData);
+
+    navigate('/');
+  };
+
   const handleSearch = async (searchCity = city) => {
     setWeather(null);
     setLocation(null);
@@ -29,25 +48,9 @@ function App() {
     setLoading(true);
 
     try {
-      const cityData = await getCoordinates(searchCity);
-
-      if (!cityData) {
-        setError('City not found.');
-        return;
-      }
-
-      setCity(cityData.name);
-      setLocation(cityData);
-
-      const weatherData = await getWeather(
-        cityData.latitude,
-        cityData.longitude
-      );
-
-      setWeather(weatherData);
-      navigate('/');
-    } catch {
-      setError('Something went wrong. Please try again.');
+      await loadWeather(searchCity);
+    } catch (error) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -58,25 +61,9 @@ function App() {
     setError('');
 
     try {
-      const cityData = await getCoordinates(cityName);
-
-      if (!cityData) {
-        setError('City not found.');
-        return;
-      }
-
-      const weatherData = await getWeather(
-        cityData.latitude,
-        cityData.longitude
-      );
-
-      setCity(cityData.name);
-      setLocation(cityData);
-      setWeather(weatherData);
-
-      navigate('/');
-    } catch {
-      setError('Something went wrong. Please try again.');
+      await loadWeather(cityName);
+    } catch (error) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
